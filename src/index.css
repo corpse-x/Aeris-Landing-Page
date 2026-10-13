@@ -1,0 +1,65 @@
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/assets/aeris/fonts/jetbrains-mono.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BubbledotICG-FinePos';
+  src: url('/assets/aeris/fonts/aeris-dot-display.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply m-0 overflow-x-hidden bg-black font-jetbrains antialiased; }
+  button, a { -webkit-tap-highlight-color: transparent; }
+  button { font: inherit; }
+  :focus-visible { outline: 2px solid #F64302; outline-offset: 5px; }
+  ::selection { background: #F64302; color: white; }
+}
+
+@layer components {
+  .action { @apply transition duration-300 active:scale-[.98]; }
+  .action:active { scale: .98; }
+  .action svg { @apply transition-transform duration-300; }
+  .action:hover svg { transform: translateX(2px); }
+  .reveal-item { opacity: 0; }
+  .is-visible .reveal-up { @apply animate-fade-up; }
+  .is-visible .reveal-scale { @apply animate-scale-in; }
+  .is-visible .reveal-fade { @apply animate-fade-in; }
+  .full-screen { min-height: 100svh; }
+  .hero-screen { height: 100svh; min-height: 600px; }
+  .media-poster { animation: poster-pan 20s ease-in-out infinite alternate; }
+}
+
+@keyframes poster-pan {
+  from { transform: scale(1.015) translateX(-.3%); }
+  to { transform: scale(1.055) translateX(.3%); }
+}
+
+dialog::backdrop { background: rgb(0 0 0 / .75); backdrop-filter: blur(12px); }
+
+@media (min-width: 768px) {
+  .product-screen { height: 100svh; min-height: 700px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-item { opacity: 1 !important; transform: none !important; }
+  .media-poster { transform: none; }
+  .splash-overlay { transition: opacity 200ms linear !important; }
+}
